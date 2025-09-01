@@ -11,7 +11,7 @@
 - **Péndulo** (período \(T\), amortiguamiento),
 - **Viscosímetro de esfera** (velocidad terminal \(v_t\) y \(\mu\)),
 - y en general, **cualquier experimento** que parta de un video y necesite un *pipeline* reproducible.
-3. Detección de picos en un péndulo simple. Este script genera datos simulados del movimiento de un péndulo simple, reconstruye el ángulo \(θ(t)\) a partir de las posiciones \((x,y)\) y aplica un filtro de suavizado (Savitzky–Golay) para reducir el efecto del ruido. Posteriormente utiliza scipy.signal.find_peaks para identificar los máximos locales de la oscilación y graficarlos sobre la señal.
+3. **Detección de picos en un péndulo simple**. Este script genera datos simulados del movimiento de un péndulo simple, reconstruye el ángulo \(θ(t)\) a partir de las posiciones \((x,y)\) y aplica un filtro de suavizado (Savitzky–Golay) para reducir el efecto del ruido. Posteriormente utiliza scipy.signal.find_peaks para identificar los máximos locales de la oscilación y graficarlos sobre la señal.
 La visualización permite:
 - Ver la dinámica oscilatoria del péndulo.
 - Identificar los picos detectados automáticamente (en rojo).
