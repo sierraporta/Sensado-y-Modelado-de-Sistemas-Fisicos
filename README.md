@@ -16,3 +16,4 @@ La visualización permite:
 - Ver la dinámica oscilatoria del péndulo.
 - Identificar los picos detectados automáticamente (en rojo).
 - Usar la separación temporal entre picos para estimar el período experimental del péndulo.
+4. ****
