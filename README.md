@@ -16,4 +16,16 @@ La visualización permite:
 - Ver la dinámica oscilatoria del péndulo.
 - Identificar los picos detectados automáticamente (en rojo).
 - Usar la separación temporal entre picos para estimar el período experimental del péndulo.
-4. ****
+4. **Sistema Masa Resorte**. Si ya tienes \(x(t_i)\) de la cámara (posiciones muestreadas en el tiempo), puedes estimar parámetros físicos ajustando directamente el modelo de ecuaciones diferenciales del oscilador. Trabaja siempre respecto al equilibrio, definiendo \(y(t)=x(t)-x_{\mathrm{eq}}\) para que la gravedad desaparezca. El modelo libre y lineal con amortiguamiento viscoso es
+\[
+m\,\ddot y + b\,\dot y + k\,y = 0
+\;\;\Longleftrightarrow\;\;
+\ddot y + 2\zeta\omega_0\,\dot y + \omega_0^2\,y = 0,
+\]
+donde \(\omega_0=\sqrt{k/m}\) y \(\zeta=\frac{b}{2m\omega_0}=\frac{b}{2\sqrt{mk}}\). Si usas excitación conocida, el modelo forzado es \(m\,\ddot y + b\,\dot y + k\,y = u(t)\). En la práctica conviene fijar una masa efectiva \(m_{\mathrm{ef}}\) (masa añadida más ≈ un tercio de la masa del resorte) y estimar \(k\) y \(b\); si deseas estimar también \(m\), usa datos forzados o varias corridas con masas distintas.
+
+En la “regresión de derivadas” se suaviza \(y(t)\) y se calculan \(\dot y\) y \(\ddot y\) por derivación numérica (por ejemplo, con Savitzky–Golay); luego se ajusta la forma normalizada \(\ddot y = -a\,\dot y - b\,y\) con \(a=2\zeta\omega_0\) y \(b=\omega_0^2\), resolviendo por mínimos cuadrados \(\min_{a,b}\sum_i[\ddot y_i + a\,\dot y_i + b\,y_i]^2\). A partir de \(a\) y \(b\) se recupera \(\omega_0=\sqrt{b}\) y \(\zeta=a/(2\omega_0)\), y con la masa se obtiene \(k=m\,\omega_0^2\) y \(b_{\mathrm{visc}}=2m\zeta\omega_0\). Este método es muy simple y rápido, pero sensible al ruido introducido por las derivadas, por lo que requiere un buen suavizado.
+
+En el “ajuste por solución de la ODE” se toman condiciones iniciales del dato (\(y(0)=y_0\) y \(\dot y(0)\approx (y_1-y_0)/\Delta t\)), se consideran como parámetros \(\theta=(k,b)\) manteniendo \(m\) fijo, y se integra la ecuación \(\ddot y + \tfrac{b}{m}\dot y + \tfrac{k}{m}y=0\) sobre los tiempos medidos (por ejemplo, con Runge–Kutta). Los parámetros se estiman minimizando el costo \(J(\theta)=\sum_i [y_{\mathrm{data}}(t_i)-y_{\mathrm{model}}(t_i;\theta)]^2\) —opcionalmente con pérdida robusta como Huber— y se optimiza con algoritmos tipo Levenberg–Marquardt o TRF; las incertidumbres pueden obtenerse de la jacobiana o por bootstrap. Este enfoque no depende de derivar los datos y suele ser más estable, a costa de un poco más de cómputo.
+
+De modo analítico, en régimen subamortiguado la solución libre es \(y(t)=A\,e^{-\gamma t}\cos(\omega_d t+\phi)\), con \(\gamma=\tfrac{b}{2m}\) y \(\omega_d=\sqrt{\omega_0^2-\gamma^2}\). La frecuencia amortiguada \(\omega_d\) se obtiene promediando periodos entre picos o ceros; el amortiguamiento \(\gamma\) se estima linealizando la envolvente \(\ln|y_{\text{pico}}(t)|\approx \ln A-\gamma t\); luego \(\omega_0=\sqrt{\omega_d^2+\gamma^2}\) y, en consecuencia, \(k=m\,\omega_0^2\) y \(b=2m\gamma\). Este camino es muy transparente y rápido, aunque asume linealidad y requiere picos limpios con poco ruido.
