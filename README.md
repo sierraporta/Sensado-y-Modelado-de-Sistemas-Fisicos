@@ -16,7 +16,7 @@ La visualización permite:
 - Ver la dinámica oscilatoria del péndulo.
 - Identificar los picos detectados automáticamente (en rojo).
 - Usar la separación temporal entre picos para estimar el período experimental del péndulo.
-4. **Resolviendo Ecuaciones Diferenciales**. Hay un Notebook: [Detecting_Points.ipynb](https://github.com/sierraporta/Sensado-y-Modelado-de-Sistemas-Fisicos/blob/main/Detecting_Points.ipynb). 
+4. **Resolviendo Ecuaciones Diferenciales**. Hay un Notebook: [intro_linear_ode_cooling.ipynb](https://github.com/sierraporta/Sensado-y-Modelado-de-Sistemas-Fisicos/blob/main/intro_linear_ode_cooling.ipynb). 
 5. **Sistema Masa Resorte**. Si ya tienes $x(t_i)$ de la cámara (posiciones muestreadas en el tiempo), puedes estimar parámetros físicos ajustando directamente el modelo de ecuaciones diferenciales del oscilador. Trabaja siempre respecto al equilibrio, definiendo $y(t)=x(t)-x_{\mathrm{eq}}$ para que la gravedad desaparezca. El modelo libre y lineal con amortiguamiento viscoso es
 \[
 m\,\ddot y + b\,\dot y + k\,y = 0
